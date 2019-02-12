@@ -38,6 +38,10 @@ class Gallery(models.Model):
         verbose_name=_('Title'),
     )
 
+    slug = models.SlugField(
+        verbose_name=_('Slug'),
+    )
+
     date = models.DateTimeField(
         verbose_name=_('Date'),
         blank=True, null=True,
@@ -72,7 +76,13 @@ class Gallery(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('image_gallery_detail', kwargs={'pk': self.pk, })
+        # return reverse('image_gallery:image_gallery_detail', kwargs={'pk': self.pk, })
+        return reverse(
+            'image_gallery:image_gallery_detail',
+            kwargs={
+                'slug': self.slug,
+            }
+        )
 
     def get_featured_images(self):
         """
