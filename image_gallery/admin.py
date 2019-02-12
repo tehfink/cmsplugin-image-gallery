@@ -22,6 +22,4 @@ class GalleryImageInline(admin.TabularInline):
     model = models.GalleryImageExtension
 
 
-admin.site.register(models.GalleryCategory, GalleryCategoryAdmin)
-admin.site.register(models.Gallery, GalleryAdmin)
 ImageAdmin.inlines = ImageAdmin.inlines[:] + [GalleryImageInline]

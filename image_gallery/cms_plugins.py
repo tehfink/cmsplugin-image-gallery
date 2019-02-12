@@ -7,6 +7,7 @@ from cms.plugin_pool import plugin_pool
 from .models import GalleryPlugin
 
 
+@plugin_pool.register_plugin
 class CMSGalleryPlugin(CMSPluginBase):
     model = GalleryPlugin
     name = _('Filer Gallery')
@@ -20,5 +21,3 @@ class CMSGalleryPlugin(CMSPluginBase):
             'display_type': instance.display_type,
         })
         return context
-
-plugin_pool.register_plugin(CMSGalleryPlugin)

@@ -5,9 +5,11 @@ from cms.app_base import CMSApp
 from cms.apphook_pool import apphook_pool
 
 
+@apphook_pool.register
 class ImageGalleryApphook(CMSApp):
     name = _("Image Gallery Apphook")
-    urls = ["image_gallery.urls"]
+    app_name = "image_gallery"
 
 
-apphook_pool.register(ImageGalleryApphook)
+    def get_urls(self, page=None, language=None, **kwargs):
+        return ["image_gallery.urls"]
