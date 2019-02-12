@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+
+{% block content %}
+
+<h1>{{ image.title }}</h1>
+
+<img src="{% thumbnail image 640x480 crop upscale %}" alt="">
+<br>
+Name: {% firstof image.name image.original_filename %}
+<br>
+Description: {{ image.description }}
+<br>
+default_alt_text: {{ image.default_alt_text }}
+<br>
+caption: {{ image.caption }}
+
+{% endblock %}

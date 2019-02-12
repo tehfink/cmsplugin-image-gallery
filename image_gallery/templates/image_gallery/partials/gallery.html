@@ -1,9 +1,20 @@
-{% load i18n thumbnail cms_tags %}
+{% load i18n thumbnail cms_tags image_gallery_tags %}
 <h1>{{ gallery.title }}</h1>
 <h2>{% if gallery.date %}{{ gallery.date|date }}, {% endif %}{{ gallery.location }}</h2>
 <p>{% render_placeholder gallery.description "description" %}</p>
 <ul class="image-gallery {{ display_type }}">
     {% for image in gallery.get_folder_images %}
-        <li><img src="{% thumbnail image.file 200x200 crop upscale %}" alt=""></li>
+        <li>
+                <img src="{% thumbnail image.file 200x200 crop upscale %}" alt="">
+                <br>
+                Name: <a href="{% get_slug image %}">{% firstof image.name image.original_filename %}</a>
+                <br>
+                Description: {{ image.description }}
+                <br>
+                default_alt_text: {{ image.default_alt_text }}
+                <br>
+                caption: {{ image.caption }}
+
+        </li>
     {% endfor %}
 </ul>

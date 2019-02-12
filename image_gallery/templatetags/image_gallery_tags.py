@@ -1,8 +1,7 @@
 """Template tags for the ``image_gallery`` app."""
 from django import template
-
+from django.utils.text import slugify
 from filer.models import Image
-
 from image_gallery.models import Gallery
 
 register = template.Library()
@@ -25,3 +24,9 @@ def render_pictures(context, selection='recent', amount=3):
     else:
         return None
     return context
+
+
+@register.simple_tag()
+def get_slug(img):
+    name = img.name or img.original_filename
+    return slugify(name)
