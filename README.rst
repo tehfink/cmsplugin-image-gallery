@@ -1,3 +1,9 @@
+2019-02
+=======
+
+- switched Gallery url & view to slug-based, and added image_detail underneath a gallery
+
+
 CMSplugin Image Gallery
 ====================
 
