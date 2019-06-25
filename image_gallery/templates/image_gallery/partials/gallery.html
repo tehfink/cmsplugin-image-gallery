@@ -7,7 +7,9 @@
         <li>
                 <img src="{% thumbnail image.file 200x200 crop upscale %}" alt="">
                 <br>
-                Name: <a href="{% get_slug image %}">{% firstof image.name image.original_filename %}</a>
+                Name: <a href="{% get_slug image %}">
+                    {% firstof image.name image.original_filename %}
+                </a>
                 <br>
                 Description: {{ image.description }}
                 <br>
