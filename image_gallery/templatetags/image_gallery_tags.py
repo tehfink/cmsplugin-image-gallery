@@ -1,4 +1,5 @@
 """Template tags for the ``image_gallery`` app."""
+from django.core.urlresolvers import reverse
 from django import template
 from django.utils.text import slugify
 from filer.models import Image
@@ -27,6 +28,16 @@ def render_pictures(context, selection='recent', amount=3):
 
 
 @register.simple_tag()
-def get_slug(img):
+def get_slug(img, gallery=None):
+    """ Stands in for `get_absolute_url()` on a Gallery's Image model """
+    if gallery is None:
+        gallery = img.folder.gallery_set.first()
     name = img.name or img.original_filename
-    return slugify(name)
+    # return urljoin(gallery.get_absolute_url(), slugify(name)) # breaks breadcrumbs
+    return reverse(
+        'image_gallery:image_detail',
+        kwargs={
+            'gallery_slug': gallery.slug,
+            'slug': slugify(name),
+        }
+    )
