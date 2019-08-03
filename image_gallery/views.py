@@ -4,8 +4,9 @@ from django.views.generic import DetailView, ListView, TemplateView
 from django.views import View
 from django.utils.text import slugify
 from django.http import Http404
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from filer.models import File, Image
-from .app_settings import PAGINATION_AMOUNT
+from .app_settings import GALLERY_PAGINATION_AMOUNT, IMAGE_PAGINATION_AMOUNT
 from .models import Gallery, GalleryCategory
 
 
@@ -23,6 +24,7 @@ class ImageDetailView(DetailView):
 
     def get_object(self, queryset=None):
         """ Iterates over queryset of Images in a Gallery, matching passed in slug to an Image's slugified `name` or `original_filemane`
+            NB: this is inefficient
         """
         if queryset is None:
             queryset = self.get_queryset()
@@ -35,9 +37,30 @@ class ImageDetailView(DetailView):
         raise Http404(f"No {self.model._meta.verbose_name} found matching the query")
 
 
+class GalleryDetailView(DetailView):
+    """View to display a list of ``Images`` instances in a ``Gallery``."""
+    template_name = 'image_gallery/gallery_detail.html'
+    model = Gallery
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        image_list = self.get_object().get_folder_image_list()
+        paginator = Paginator(image_list, IMAGE_PAGINATION_AMOUNT)
+        page = self.request.GET.get('page')
+        try:
+            images = paginator.page(page)
+        except PageNotAnInteger:
+            images = paginator.page(1)
+        except EmptyPage:
+            images = paginator.page(paginator.num_pages)
+
+        context['images'] = images
+        return context
+
+
 class GalleryListView(ListView):
     """View to display a list of ``Gallery`` instances."""
-    paginate_by = PAGINATION_AMOUNT
+    paginate_by = GALLERY_PAGINATION_AMOUNT
     template_name = 'image_gallery/gallery_list.html'
     model = Gallery
 

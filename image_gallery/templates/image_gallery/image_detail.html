@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load thumbnail %}
 
+
 {% block content %}
 
 <h1>{{ image.title }}</h1>
@@ -13,6 +14,6 @@ Description: {{ image.description }}
 <br>
 default_alt_text: {{ image.default_alt_text }}
 <br>
-caption: {{ image.caption }}
+Caption: {{ image.caption }}
 
 {% endblock %}

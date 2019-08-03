@@ -2,4 +2,25 @@
 
 {% block content %}
 {% include "image_gallery/partials/gallery.html" %}
+
+{% if images.has_other_pages %}
+
+<div class="pagination">
+    <span class="step-links">
+        {% if images.has_previous %}
+            <a href="?page={{ images.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ images.number }} of {{ images.paginator.num_pages }}.
+        </span>
+
+        {% if images.has_next %}
+            <a href="?page={{ images.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
+
+{% endif %}
+
 {% endblock %}

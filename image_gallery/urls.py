@@ -3,7 +3,7 @@ from django.conf.urls import url
 from django.views.generic import DetailView
 
 from .models import Gallery
-from .views import GalleryListView, ImageDetailView
+from .views import GalleryListView, ImageDetailView, GalleryDetailView
 
 
 app_name = 'image_gallery'
@@ -17,7 +17,7 @@ urlpatterns = [
 
     url(
         r'^(?P<slug>\w+)/$',
-        DetailView.as_view(model=Gallery),
+        GalleryDetailView.as_view(),
         name='image_gallery_detail'
     ),
 
