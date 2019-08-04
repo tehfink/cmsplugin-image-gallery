@@ -16,16 +16,20 @@ default_alt_text: {{ image.default_alt_text }}
 <br>
 Caption: {{ image.caption }}
 
-{% if image_count > 1 %}
+{% if gallery.get_folder_images_count > 1 %}
 <div class="pagination">
-    <a href="{% get_slug prev_image %}">
+    {% if prev_image %}
+    <a href="{% get_slug prev_image gallery %}">
         <span class="icon"><</span>
         {{ prev_image }}
     </a>
-    <a href="{% get_slug next_image %}">
+    {% endif %}
+    {% if next_image %}
+    <a href="{% get_slug next_image gallery %}">
         {{ next_image }}
         <span class="icon">></span>
     </a>
+    {% endif %}
 </div>
 {% endif %}
 

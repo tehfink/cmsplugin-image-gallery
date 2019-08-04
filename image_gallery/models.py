@@ -132,21 +132,21 @@ class Gallery(models.Model):
         return self.get_folder_image_list().index(image)
 
     def get_folder_image_list_next(self, image):
-        """ """
+        next_image = None
         try:
             next_image = self.get_folder_image_list()[self.get_folder_image_list_index(image)+1]
-        except Exception as e:
-            next_image = None
-            print(e)
+        except IndexError as e:
+            next_image = self.get_folder_image_list()[0]    # rollover to first image
+            # print(e)
         return next_image
 
     def get_folder_image_list_prev(self, image):
-        """ """
+        prev_image = None
         try:
             prev_image = self.get_folder_image_list()[self.get_folder_image_list_index(image)-1]
         except Exception as e:
             prev_image = None
-            print(e)
+            # print(e)
         return prev_image
 
 

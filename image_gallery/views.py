@@ -42,11 +42,10 @@ class ImageDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        image = self.get_object()
-        gallery = self.get_gallery()
-        context['image_count'] = gallery.get_folder_images_count()
-        context['prev_image'] = gallery.get_folder_image_list_prev(image)
-        context['next_image'] = gallery.get_folder_image_list_next(image)
+        # import ipdb; ipdb.set_trace()
+        context['gallery'] = self.get_gallery()
+        context['prev_image'] = context['gallery'].get_folder_image_list_prev(context['image'])
+        context['next_image'] = context['gallery'].get_folder_image_list_next(context['image'])
         return context
 
 class GalleryDetailView(DetailView):
