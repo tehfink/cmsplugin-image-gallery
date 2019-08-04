@@ -15,6 +15,10 @@ class ImageDetailView(DetailView):
     template_name = 'image_gallery/image_detail.html'
     slug_field = 'name'
 
+    def get_gallery(self):
+        """ Returns Gallery instance for this Image instance """
+        return self.get_object().folder.gallery_set.first()
+
     def get_queryset(self):
         """ Filter the Image queryset for only images in the Gallery noted by `gallery_slug` """
         queryset = super().get_queryset()
@@ -36,6 +40,14 @@ class ImageDetailView(DetailView):
                     return q
         raise Http404(f"No {self.model._meta.verbose_name} found matching the query")
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        image = self.get_object()
+        gallery = self.get_gallery()
+        context['image_count'] = gallery.get_folder_images_count()
+        context['prev_image'] = gallery.get_folder_image_list_prev(image)
+        context['next_image'] = gallery.get_folder_image_list_next(image)
+        return context
 
 class GalleryDetailView(DetailView):
     """View to display a list of ``Images`` instances in a ``Gallery``."""

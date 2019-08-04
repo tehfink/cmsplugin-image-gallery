@@ -16,4 +16,17 @@ default_alt_text: {{ image.default_alt_text }}
 <br>
 Caption: {{ image.caption }}
 
+{% if image_count > 1 %}
+<div class="pagination">
+    <a href="{% get_slug prev_image %}">
+        <span class="icon"><</span>
+        {{ prev_image }}
+    </a>
+    <a href="{% get_slug next_image %}">
+        {{ next_image }}
+        <span class="icon">></span>
+    </a>
+</div>
+{% endif %}
+
 {% endblock %}

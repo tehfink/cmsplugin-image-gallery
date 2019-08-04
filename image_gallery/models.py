@@ -110,6 +110,9 @@ class Gallery(models.Model):
         qs_files = self.folder.files.instance_of(Image)
         return qs_files.filter(is_public=True)
 
+    def get_folder_images_count(self):
+        return self.get_folder_images().count()
+
     def get_folder_image_list(self):
         """
         Returns a list of images, which have been placed in this folder.
@@ -123,6 +126,28 @@ class Gallery(models.Model):
         return list(chain(
             qs_files.exclude(name='').order_by('name'),
             qs_files.filter(name='').order_by('file')))
+
+    def get_folder_image_list_index(self, image):
+        """ Return index position of Image in Gallery's `get_folder_image_list` """
+        return self.get_folder_image_list().index(image)
+
+    def get_folder_image_list_next(self, image):
+        """ """
+        try:
+            next_image = self.get_folder_image_list()[self.get_folder_image_list_index(image)+1]
+        except Exception as e:
+            next_image = None
+            print(e)
+        return next_image
+
+    def get_folder_image_list_prev(self, image):
+        """ """
+        try:
+            prev_image = self.get_folder_image_list()[self.get_folder_image_list_index(image)-1]
+        except Exception as e:
+            prev_image = None
+            print(e)
+        return prev_image
 
 
 @python_2_unicode_compatible
