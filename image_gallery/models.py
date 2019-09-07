@@ -75,6 +75,21 @@ class Gallery(models.Model):
     def __str__(self):
         return self.title
 
+    _image_catalog = None
+    @property
+    def image_catalog(self):
+        """ Returns a cached text list of image titles & descriptions for Haystack search indexing """
+        if self._image_catalog is None:
+            image_catalog  = ''
+            for image in self.get_folder_image_list():
+                image_entry = image.name or image.original_filename
+                image_description = image.description or image.default_caption
+                if image_description:
+                    image_entry += ": " + image_description
+                image_catalog += image_entry + "\n"
+            self._image_catalog = image_catalog
+        return self._image_catalog
+
     def get_absolute_url(self):
         # return reverse('image_gallery:image_gallery_detail', kwargs={'pk': self.pk, })
         return reverse(
