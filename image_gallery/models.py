@@ -75,6 +75,13 @@ class Gallery(models.Model):
     def __str__(self):
         return self.title
 
+    _image_count = None
+    @property
+    def image_count(self):
+        if self._image_count is None:
+            self._image_count = self.get_folder_images_count()
+        return self._image_count
+
     _image_catalog = None
     @property
     def image_catalog(self):
