@@ -23,11 +23,12 @@ class ImageDetailView(DetailView):
         """ Filter the Image queryset for only images in the Gallery noted by `gallery_slug` """
         queryset = super().get_queryset()
         if self.kwargs['gallery_slug']:
-            return queryset.filter(folder__gallery__title__iexact=self.kwargs['gallery_slug'])
+            # import ipdb;ipdb.set_trace()
+            return queryset.filter(folder__gallery__slug__iexact=self.kwargs['gallery_slug'])
         return queryset
 
     def get_object(self, queryset=None):
-        """ Iterates over queryset of Images in a Gallery, matching passed in slug to an Image's slugified `name` or `original_filemane`
+        """ Iterates over queryset of Images in a Gallery, matching passed in slug to an Image's slugified `name` or `original_filename`
             NB: this is inefficient
         """
         if queryset is None:
