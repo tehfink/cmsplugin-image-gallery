@@ -1,9 +1,12 @@
 """Template tags for the ``image_gallery`` app."""
-from django.core.urlresolvers import reverse
+try:
+    from django.core.urlresolvers import reverse
+except ModuleNotFoundError:
+    from django.urls import reverse
 from django import template
 from django.utils.text import slugify
 from filer.models import Image
-from image_gallery.models import Gallery
+from .models import Gallery
 
 register = template.Library()
 
