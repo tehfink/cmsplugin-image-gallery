@@ -30,7 +30,7 @@ class Gallery(models.Model):
     category = models.ForeignKey(
         'image_gallery.GalleryCategory',
         verbose_name=_('Category'),
-        blank=True, null=True,
+        blank=True, null=True, on_delete=models.PROTECT,
     )
 
     title = models.CharField(
@@ -59,7 +59,7 @@ class Gallery(models.Model):
     )
 
     folder = FilerFolderField(
-        verbose_name=_('Folder'),
+        verbose_name=_('Folder'), on_delete=models.PROTECT,
     )
 
     is_published = models.BooleanField(
@@ -210,7 +210,7 @@ class GalleryImageExtension(models.Model):
     """
     image = models.OneToOneField(
         Image,
-        verbose_name=_('Image'),
+        verbose_name=_('Image'), on_delete=models.CASCADE,
     )
 
     is_featured_image = models.BooleanField(
@@ -235,7 +235,7 @@ class GalleryPlugin(CMSPlugin):
     """
     gallery = models.ForeignKey(
         Gallery,
-        verbose_name=_('Gallery'),
+        verbose_name=_('Gallery'), on_delete=models.CASCADE,
     )
 
     display_type = models.CharField(
