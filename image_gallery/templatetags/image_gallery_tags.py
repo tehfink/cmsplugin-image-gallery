@@ -6,7 +6,7 @@ except ModuleNotFoundError:
 from django import template
 from django.utils.text import slugify
 from filer.models import Image
-from .models import Gallery
+from ..models import Gallery
 
 register = template.Library()
 
