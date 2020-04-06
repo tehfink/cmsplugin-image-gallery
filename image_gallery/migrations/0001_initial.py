@@ -50,7 +50,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('is_featured_image', models.BooleanField(default=False, verbose_name='Is featured image')),
-                ('image', models.OneToOneField(verbose_name='Image', to='filer.Image')),
+                ('image', models.OneToOneField(verbose_name='Image', to='filer.Image', on_delete='models.CASCADE')),
             ],
             options={
                 'verbose_name': 'Gallery Image Extension',
@@ -61,9 +61,9 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='GalleryPlugin',
             fields=[
-                ('cmsplugin_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='cms.CMSPlugin')),
+                ('cmsplugin_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='cms.CMSPlugin', on_delete='models.CASCADE')),
                 ('display_type', models.CharField(blank=True, max_length=256, choices=[(b'default', 'Default'), (b'teaser', 'Teaser')])),
-                ('gallery', models.ForeignKey(verbose_name='Gallery', to='image_gallery.Gallery')),
+                ('gallery', models.ForeignKey(verbose_name='Gallery', to='image_gallery.Gallery', on_delete='models.CASCADE')),
             ],
             options={
                 'abstract': False,
@@ -73,7 +73,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='gallery',
             name='category',
-            field=models.ForeignKey(verbose_name='Category', blank=True, to='image_gallery.GalleryCategory', null=True),
+            field=models.ForeignKey(verbose_name='Category', blank=True, to='image_gallery.GalleryCategory', null=True, on_delete='models.PROTECT'),
             preserve_default=True,
         ),
         migrations.AddField(
@@ -85,7 +85,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='gallery',
             name='folder',
-            field=filer.fields.folder.FilerFolderField(verbose_name='Folder', to='filer.Folder'),
+            field=filer.fields.folder.FilerFolderField(verbose_name='Folder', to='filer.Folder', on_delete='models.PROTECT'),
             preserve_default=True,
         ),
     ]
