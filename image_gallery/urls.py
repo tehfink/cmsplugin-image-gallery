@@ -10,13 +10,13 @@ app_name = 'image_gallery'
 urlpatterns = [
 
     url(
-        r'^(?P<gallery_slug>\w+)/(?P<slug>[0-9A-Za-z-_.//]+)/$',
+        r'^(?P<gallery_slug>[\w-]+)/(?P<slug>[0-9A-Za-z-_.//]+)/$',
         ImageDetailView.as_view(),
         name='image_detail'
     ),
 
     url(
-        r'^(?P<slug>\w+)/$',
+        r'^(?P<slug>[\w-]+)/$',
         GalleryDetailView.as_view(),
         name='image_gallery_detail'
     ),
