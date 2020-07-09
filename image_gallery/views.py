@@ -87,6 +87,9 @@ class GalleryListView(ListView):
         options['pages_visible_total_negative'] = pages_visible_negative - 1
         return options
 
+    def get_queryset(self):
+        return self.model.objects.filter(is_published=True)
+        
     # returns list of Files in Galleries, instead of Gallery objects??
     # def get_queryset(self):
     #     return File.objects.filter(

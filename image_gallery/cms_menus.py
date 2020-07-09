@@ -17,7 +17,7 @@ class ImageGalleryMenu(CMSAttachMenu):
         """ creates parent-child list for extending django-cms navigation (menu & breadcrumb) """
 
         nodes = []
-        galleries = list(Gallery.objects.all())
+        galleries = list(Gallery.objects.filter(is_published=True))
 
         menu_id = 1
         for gallery in galleries:

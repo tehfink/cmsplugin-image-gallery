@@ -15,7 +15,7 @@ class GalleryIndex(indexes.SearchIndex, indexes.Indexable):
 
     def index_queryset(self, using=None):
         """Used when the entire index for model is updated."""
-        return self.get_model().objects.all()
+        return self.get_model().objects.filter(is_published=True)
 
     def get_search_data(self, obj):
         return obj.image_catalog
